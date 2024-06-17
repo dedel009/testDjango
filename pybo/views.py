@@ -53,5 +53,5 @@ def question_create(request):
             return redirect('pybo:main')
     else:
         form = QuestionForm()
-        print("저장하기 화면")
+        print("저장 하기 화면")
     return render(request, 'pybo/question_form.html', {'form': form})
