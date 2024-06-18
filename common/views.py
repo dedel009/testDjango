@@ -1,4 +1,5 @@
 from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from common.forms import UserForm
@@ -13,6 +14,7 @@ def logout_view(request):
 
 
 #회원가입
+@login_required(login_url='common:login')
 def signup(request):
     if request.method == 'POST':
         form = UserForm(request.POST)

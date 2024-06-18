@@ -1,5 +1,5 @@
 # Create your views here.
-
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
@@ -27,6 +27,7 @@ def detail(request, qid):
 
 
 #답변 추가
+@login_required(login_url='common:login')
 def answer_create(request, qid):
     question = get_object_or_404(Question, pk=qid)
     # question.answers.create(content=request.POST.get('content'), create_date=timezone.now())
@@ -37,15 +38,17 @@ def answer_create(request, qid):
             answer = form.save(commit=False)
             answer.create_date = timezone.now()
             answer.question = question
+            answer.author = request.user  # author 속성에 로그인 계정 저장
             answer.save()
             return redirect('pybo:detail', qid=qid)
     else:
-        return HttpResponseNotAllowed('Only POST is possible.')
+        form = AnswerForm()
     context = {'question': question, 'form': form}
     return render(request, 'pybo/question_detail.html', context)
 
 
 #질문 추가
+@login_required(login_url='common:login')
 def question_create(request):
     if request.method == 'POST':
         form = QuestionForm(request.POST)
