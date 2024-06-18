@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-    <h5 class="my-3 border-bottom pb-2">질문등록</h5>
+    <h5 class="my-3 border-bottom pb-2">질문{% if qid %}수정{% else %}등록{% endif %}</h5>
     <form method="post">
         {% csrf_token %}
         <!-- 오류표시 Start -->
