@@ -20,6 +20,9 @@
             </td>
             <td>
                 <a href="{% url 'pybo:detail' qid=question.id %}">{{ question.subject }}</a>
+                {% if question.answers.count > 0 %}
+                    <span class="text-danger small mx-2">{{ question.answers.count }}개의 답변</span>
+                {% endif %}
             </td>
             <td>{{ question.create_date }}</td>
         </tr>
