@@ -56,6 +56,7 @@ def question_create(request):
             question = form.save(commit=False)
             question.create_date = timezone.now()
             print("question 객체 :", question)
+            question.author = request.user
             question.save()
             return redirect('pybo:main')
     else:
