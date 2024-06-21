@@ -30,9 +30,17 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
+LOCAL_APPS = [
+    'quickstart.apps.QuickstartConfig',
     'common.apps.CommonConfig',
     'pybo.apps.PyboConfig',
+]
+
+OTHER_LIBRARY_APPS = [
+    'rest_framework',
+]
+
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,6 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + OTHER_LIBRARY_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
