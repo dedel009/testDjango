@@ -2,6 +2,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.reverse import reverse
 from tutorial.quickstart.serializers import UserSerializer, GroupSerializer
 
 from quickstart.models import Snippet
@@ -68,4 +69,3 @@ def snippet_detail(reqeust, pk, format=None):
     elif reqeust.method == 'DELETE':
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
