@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 LOCAL_APPS = [
+    'testApi.apps.TestapiConfig',
     'quickstart.apps.QuickstartConfig',
     'common.apps.CommonConfig',
     'pybo.apps.PyboConfig',
@@ -38,6 +39,7 @@ LOCAL_APPS = [
 
 OTHER_LIBRARY_APPS = [
     'rest_framework',
+    'drf_yasg',
 ]
 
 DJANGO_APPS = [
