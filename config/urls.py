@@ -33,8 +33,15 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('pybo/', include('pybo.urls')),
     path('common/', include('common.urls')),
+    path('web-admin/', include('testApi.urls')),
     # path('', base_views.main, name='main'),
     path('', include(router.urls)),
+
+]
+
+
+urlpatterns += [
+    # 라이브러리 관련 url
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/', include('quickstart.urls')),
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
