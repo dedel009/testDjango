@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 LOCAL_APPS = [
-    'testApi.apps.TestapiConfig',
+    'inquiry.apps.TestapiConfig',
     'quickstart.apps.QuickstartConfig',
     'common.apps.CommonConfig',
     'pybo.apps.PyboConfig',

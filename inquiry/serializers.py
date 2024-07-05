@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 
-class DepositResponseSerializer(serializers.Serializer):
+class DepositWithdrawalResponseSerializer(serializers.Serializer):
     type = serializers.CharField(
         help_text="입출금 종류"
     )
@@ -13,9 +13,10 @@ class DepositResponseSerializer(serializers.Serializer):
     )
     net_type = serializers.CharField(
         help_text="입금 네트워크",
-        allow_blank=True
+        allow_blank=True,
+        allow_null=True
     )
-    txid = serializers.UUIDField(
+    txid = serializers.CharField(
         help_text="입금의 트랜잭션 아이디"
     )
     state = serializers.CharField(
@@ -27,10 +28,10 @@ class DepositResponseSerializer(serializers.Serializer):
     done_at = serializers.DateTimeField(
         help_text="입금 완료 시간"
     )
-    amount = serializers.IntegerField(
+    amount = serializers.FloatField(
         help_text="입금 수량"
     )
-    fee = serializers.IntegerField(
+    fee = serializers.FloatField(
         help_text="입금 수수료"
     )
     transaction_type = serializers.CharField(

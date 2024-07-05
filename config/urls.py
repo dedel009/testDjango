@@ -33,7 +33,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('pybo/', include('pybo.urls')),
     path('common/', include('common.urls')),
-    path('search/', include('testApi.urls')),
+    path('search/', include('inquiry.urls')),
     # path('', base_views.main, name='main'),
     path('', include(router.urls)),
 
