@@ -84,7 +84,8 @@ def deposit_inquiry_all_money(request: Request):
     context = {
         'total_inquiry_assets': total_inquiry_assets,
         'result': paged_list,
-        'page': page
+        'page': page,
+        'category': search_category
     }
 
     return render(request, 'inquiry/deposit_amount_list.html', context)

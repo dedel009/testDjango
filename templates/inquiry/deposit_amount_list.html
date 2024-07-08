@@ -107,11 +107,14 @@ Array.from(page_elements).forEach(function(element) {
     });
 });
 
-const category_search = document.getElementById("btn_search");
-category_search.addEventListener('click', function() {
+const btn_search = document.getElementById("btn_search");
+btn_search.addEventListener('click', function() {
     document.getElementById('page').value = 1;  // 검색버튼을 클릭할 경우 1페이지부터 조회한다.
     document.getElementById('searchForm').submit();
 });
+
+const category_search = document.getElementById("select_category");
+category_search.value = "{{ category }}"
 
 </script>
 {% endblock %}
