@@ -3,17 +3,23 @@
 {% block content %}
 <div class="container my-3">
     <div class="row my-3">
-        <div class="col-6">
-            <div class="input-group">
-                <input type="text" id="search_kw" class="form-control" value="{{ kw|default_if_none:'' }}">
-                <div class="input-group-append">
+        <div class="input-group w-auto">
+            <form id="searchForm" method="get" action="{% url 'inquiry:deposit' %}">
+                <div class="input-group mb-3">
+                    <label for="select_category"></label>
+                    <select class="form-select" name="category" id="select_category">
+                        <option value="all" selected>전체</option>
+                        <option value="deposit">입금</option>
+                        <option value="withdraw">출금</option>
+                    </select>
+                    <label for="search_code"><input type="text" name="code" id="search_code" placeholder="화폐 코드" class="form-control" value="{{ code|default_if_none:'' }}"></label>
                     <button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>
                 </div>
-
-            </div>
+                <input type="hidden" id="page" name="page" value="{{ page }}">
+            </form>
         </div>
-        <div class="col-6">
-            <p>총 입금액 : {{ total_inquiry_assets|intcomma }} 원</p>
+        <div class="w-auto">
+            <p class="h3"><strong>총 입금액 : {{ total_inquiry_assets|intcomma }} 원</strong></p>
         </div>
     </div>
     <table class="table">
@@ -30,8 +36,8 @@
         {% if result %}
         {% for obj in result %}
         <tr class="text-center">
-            <td>{{ obj.type }}</td>
-            <td>{{ obj.amount }}원</td>
+            <td>{{ obj.type|changed_type }}</td>
+            <td>{{ obj.amount|intcomma }}원</td>
             <td>{{ obj.state }}</td>
             <td>{{ obj.done_at }}</td>
             <td>{{ obj.currency }}</td>
@@ -45,54 +51,51 @@
         </tbody>
     </table>
  <!-- 페이징처리 시작 -->
-{#    <ul class="pagination justify-content-center">#}
-{#        <!-- 이전페이지 -->#}
-{#        {% if question_list.has_previous %}#}
-{#        <li class="page-item">#}
-{#            <a class="page-link" data-page="{{ question_list.previous_page_number }}"#}
-{#               href="javascript:void(0)">이전</a>#}
-{#        </li>#}
-{#        {% else %}#}
-{#        <li class="page-item disabled">#}
-{#            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>#}
-{#        </li>#}
-{#        {% endif %}#}
-{#        <!-- 페이지리스트 -->#}
-{#        {% for page_number in question_list.paginator.page_range %}#}
-{#        {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %}#}
-{#        {% if page_number == question_list.number %}#}
-{#        <li class="page-item active" aria-current="page">#}
-{#            <a class="page-link" data-page="{{ page_number }}"#}
-{#               href="javascript:void(0)">{{ page_number }}</a>#}
-{#        </li>#}
-{#        {% else %}#}
-{#        <li class="page-item">#}
-{#            <a class="page-link" data-page="{{ page_number }}"#}
-{#               href="javascript:void(0)">{{ page_number }}</a>#}
-{#        </li>#}
-{#        {% endif %}#}
-{#        {% endif %}#}
-{#        {% endfor %}#}
-{#        <!-- 다음페이지 -->#}
-{#        {% if question_list.has_next %}#}
-{#        <li class="page-item">#}
-{#            <a class="page-link" data-page="{{ question_list.next_page_number }}"#}
-{#               href="javascript:void(0)">다음</a>#}
-{#        </li>#}
-{#        {% else %}#}
-{#        <li class="page-item disabled">#}
-{#            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>#}
-{#        </li>#}
-{#        {% endif %}#}
-{#    </ul>#}
-{#    <!-- 현재 페이지 번호 표시 -->#}
-{#    <p>{{ question_list.number }} / {{ question_list.paginator.num_pages }} 페이지</p>#}
+    <ul class="pagination justify-content-center">
+        <!-- 이전페이지 -->
+        {% if result.has_previous %}
+        <li class="page-item">
+            <a class="page-link" data-page="{{ result.previous_page_number }}"
+               href="javascript:void(0)">이전</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+        </li>
+        {% endif %}
+        <!-- 페이지리스트 -->
+        {% for page_number in result.paginator.page_range %}
+        {% if page_number >= result.number|add:-5 and page_number <= result.number|add:5 %}
+        {% if page_number == result.number %}
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" data-page="{{ page_number }}"
+               href="javascript:void(0)">{{ page_number }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link" data-page="{{ page_number }}"
+               href="javascript:void(0)">{{ page_number }}</a>
+        </li>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        <!-- 다음페이지 -->
+        {% if result.has_next %}
+        <li class="page-item">
+            <a class="page-link" data-page="{{ result.next_page_number }}"
+               href="javascript:void(0)">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+    <!-- 현재 페이지 번호 표시 -->
+    <p>{{ result.number }} / {{ result.paginator.num_pages }} 페이지</p>
     <!-- 페이징처리 끝 -->
 </div>
-<form id="searchForm" method="get" action="{% url 'inquiry:deposit' %}">
-    <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
-    <input type="hidden" id="page" name="page" value="{{ page }}">
-</form>
+
 {% endblock %}
 {% block script %}
 <script type='text/javascript'>
@@ -103,11 +106,12 @@ Array.from(page_elements).forEach(function(element) {
         document.getElementById('searchForm').submit();
     });
 });
-const btn_search = document.getElementById("btn_search");
-btn_search.addEventListener('click', function() {
-    document.getElementById('kw').value = document.getElementById('search_kw').value;
+
+const category_search = document.getElementById("btn_search");
+category_search.addEventListener('click', function() {
     document.getElementById('page').value = 1;  // 검색버튼을 클릭할 경우 1페이지부터 조회한다.
     document.getElementById('searchForm').submit();
 });
+
 </script>
 {% endblock %}
