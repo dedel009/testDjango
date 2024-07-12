@@ -39,7 +39,34 @@ class DepositWithdrawalResponseSerializer(serializers.Serializer):
     )
 
 
-
+# 동적 시리얼라이저 개발 소스
+# class ClimitDynamicRequestSerializer(serializers.Serializer):
+#     user_id = serializers.UUIDField(help_text="유저 UUID")
+#     machine_id = serializers.UUIDField(help_text="머신 UUID")
+#     assignment_workout_plan_id = serializers.IntegerField(help_text='처방된 운동 플랜 ID', min_value=1)
+#     def __init__(self, **kwargs):
+#         self.request_data = kwargs.get("data", None)
+#         super().__init__(self, **kwargs)
+#         print("request_data :::", self.request_data)
+#         if self.request_data:
+#             self.field_list: list = list(self.request_data.keys())
+#             for field in self.field_list:
+#                 if field == "user_id":
+#                     # 유저 id 필드 생성
+#                     self.fields['user_id'] = serializers.UUIDField(help_text="유저 UUID")
+#                 elif field == "machine_id":
+#                     # 머신 id 필드 생성
+#                     self.fields['machine_id'] = serializers.UUIDField(help_text="머신 UUID")
+#                 elif field == "assignment_workout_plan_id" or field == "workout_plan_id":
+#                     # 처방 운동 플랜 id 필드 생성
+#                     # 필드명이 2개일 때 처리
+#                     self.fields['assignment_workout_plan_id'] = \
+#                         serializers.IntegerField(help_text='처방된 운동 플랜 ID', min_value=1, required=False)
+#                     if field == "workout_plan_id":
+#                         self.initial_data['assignment_workout_plan_id'] = self.request_data.get("workout_plan_id")
+#                 else:
+#                     # 해당되는 필드명이 없을 때 error
+#                     raise ValueError("필드명을 찾을 수 없습니다.")
 
 
 
