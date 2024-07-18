@@ -79,7 +79,7 @@ def deposit_inquiry_all_money(request: Request):
 
     paged_list = Paginator(sorted_filtered_list, 20).get_page(page)
 
-    print("총 입금액 :", total_inquiry_assets)
+    # print("총 입금액 :", total_inquiry_assets)
 
     context = {
         'total_inquiry_assets': total_inquiry_assets,
