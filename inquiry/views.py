@@ -105,6 +105,9 @@ def create_headers(params: dict, access_key, secret_key):
         'query_hash_alg': 'SHA512',
     }
 
+    print("payload :::", payload)
+    print("secret_key :::", secret_key)
+
     jwt_token = jwt.encode(payload, secret_key)
     authorization = 'Bearer {}'.format(jwt_token)
     headers = {
